@@ -1,0 +1,38 @@
+.reveal {
+	section img, a:hover img {
+		border: none;
+		background: none;
+		box-shadow: none;
+	}
+	
+	a.image {
+		display: inline-block;
+	}
+	.logos .logo {
+		margin: 25px 0;
+	}
+	.step-number {
+		margin-bottom: .7em; 
+		font-family: "League Gothic", Impact, sans-serif; 
+		font-size: 2em;
+	}
+	.areas {
+		font-size: 6em;
+	}
+	.slides {
+		counter-reset: step-number;
+	}
+	.headline {
+		position: absolute; 
+		top: 40px; 
+		width: 700px; 
+		margin: 0; 
+		padding: 10px; 
+		background: #408000; 
+		font-size: 1em;
+	}
+	.headline-image {
+		display: block; 
+		margin: 0;
+	}
+}
