@@ -1,0 +1,40 @@
+.reveal {
+	.table {
+		width: 100%;
+
+		th, td {
+			padding: 5px;
+			text-align: center;
+		}
+		th {
+			font-weight: bold;
+		}
+		thead th {
+			border-bottom: 1px solid #FFF;
+		}
+	}
+	.api-category {
+		font-weight: bold;
+		color: #528ce7;
+	}
+	.row {
+		display: flex;
+		align-items: center;
+	}
+	.col {
+		flex: 1;
+
+		> pre {
+			margin: 0 auto;
+		}
+	}
+
+	.slide-end {
+		h1, h3 {
+			text-shadow: 3px 3px 5px #555;
+		}
+		a {
+			color: #FFF;
+		}
+	}
+}

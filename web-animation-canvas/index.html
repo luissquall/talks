@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../lib/reveal.js/css/reveal.min.css">
+		<link rel="stylesheet" href="../lib/reveal.js/css/theme/night.css" id="theme">
+		<link rel="stylesheet" href="css/core.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../lib/reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../lib/reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/reveal.js/lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+				<!-- Cover -->				
+				<section>
+					<h1>Animación web con <code>&lt;canvas&gt;</code></h1>
+					<h4>Y un poco de la competencia</h4>
+					<p>
+						<small>Por <a href="http://diariodeunmono.com">mono (Luis)</a> / <a href="http://twitter.com/luissquall">@luissquall</a></small>
+					</p>
+				</section>
+
+				<section data-background='url(http://www.w3.org/html/logo/img/html5-display.png) center center no-repeat' data-background-size='contain'>
+				</section>
+				
+				<!-- Options -->
+				<section>
+					<h2>Animación en la web</h2>
+					<h3>¿Qué tecnologías compiten?</h3>
+				</section>
+
+				<!-- CSS3 -->
+				<section>
+					<section>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220.5 199.5" width="300" height="300">
+						  <title>HTML5 CSS Styling Logo</title>
+						  <path fill="#FFFFFF" d="M32.8,0L25.4,37.0 176.0,37.0 171.3,60.9 20.6,60.9 13.3,97.9 163.9,97.9 155.5,140.1 94.8,160.2 42.2,140.1 45.8,121.8 8.8,121.8 0,166.2 87.0,199.5 187.3,166.2 200.6,99.4 203.3,86.0 220.4,0z"/>
+						</svg>
+
+						<h2>CSS3</h2>
+						<p>
+							A través de los módulos de CSS <a href="http://www.w3.org/TR/css3-transitions/"><strong>Transitions</strong></a> y <a href="http://www.w3.org/TR/css3-animations/"><strong>Animations</strong></a>
+						</p>
+					</section>
+
+					<section>
+						<h2>Transitions</h2>
+						<p>
+							Transiciones entre propiedades <a href="http://www.w3.org/TR/css3-transitions/#animatable-properties-"><i>Animatable</i></a>
+						</p>
+						<pre><code data-trim contenteditable style="margin: 20px 0;">
+transition: background-color linear 1s;
+transition-property: top, left;
+transition-duration: 1s, 1s;
+transition-delay: 0s, 1s;
+						</code></pre>
+
+						<p data-height="268" data-theme-id="0" data-slug-hash="hgJqL" data-user="pankajparashar" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/luissquall/pen/hgJqL'>Neat hover animations on buttons</a> by Pankaj Parashar (<a href='http://codepen.io/pankajparashar'>@pankajparashar</a>) on <a href='http://codepen.io'>CodePen</a></p>
+<script async src="http://codepen.io/assets/embed/ei.js"></script>
+					</section>
+
+					<section>
+						<h2>Animations</h2>
+						<p>Anima los valores de propiedades CSS a lo largo del tiempo usando <i>keyframes</i></p>
+
+						<pre><code data-trim contenteditable style="margin: 20px 0;">
+animation-name: bounce;
+animation-duration: 1s;
+animation-timing-function: ease;
+animation-delay: 0s;
+animation-iteration-count: 1;
+animation-direction: normal;
+animation-fill-mode: none;
+
+@keyframes bounce {
+  to {
+    top: 100px;
+  }
+}
+						</code></pre>
+
+						<p data-height="268" data-theme-id="0" data-slug-hash="KbhmA" data-user="drygiel" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/luissquall/pen/KbhmA'>Signature animation</a> by Damian Drygiel (<a href='http://codepen.io/drygiel'>@drygiel</a>) on <a href='http://codepen.io'>CodePen</a></p>
+						<script async src="http://codepen.io/assets/embed/ei.js"></script>
+					</section>
+				</section>
+
+				<!-- SVG -->
+				<section>
+					<section>
+						<h2>SVG Animation</h2>
+						<p>
+							El contenido SVG (<strong>vectores</strong>) puede <a href="http://www.w3.org/TR/SVG/animate.html">animarse</a> usando los siguientes métodos:
+						</p>
+						<ul>
+							<li>SVG's <a href="http://www.w3.org/TR/SVG/animate.html#AnimationElements">animation elements</a></li>
+							<li><a href='http://www.w3.org/TR/SVG/svgdom.html'>SVG DOM</a>. Atributos y configuraciones de hojas de estilo disponibles para <i>scripting</i></li>
+							<li><a href="http://www.w3.org/TR/2008/REC-SMIL3-20081201/">SMIL</a> (Synchronized Multimedia Integration Language )</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Animation elements</h2>
+
+						<p>
+							<a href="http://www.w3.org/TR/SVG/animate.html#AnimationElements">Elementos de animación</a>: <code>&lt;animate&gt;</code>, <code>&lt;set&gt;</code>, <code style='font-weight: bold;'>&lt;animateMotion&gt;</code> y <code>&lt;animateColor&gt;</code>
+						</p>
+
+						<svg xmlns="http://www.w3.org/2000/svg" width="300px" height="100px">
+							<rect x="0" y="0" width="300" height="100" stroke="black" stroke-width="1" />
+							<circle cx="0" cy="50" r="15" fill="#e7ad52" stroke="black" stroke-width="1">
+								<animateMotion path="M 0 0 H 300 Z" dur="3s" repeatCount="indefinite" />
+							</circle>
+						</svg>
+
+						<pre><code data-trim contenteditable>
+<svg xmlns="http://www.w3.org/2000/svg" width="300px" height="100px">
+	<rect x="0" y="0" width="300" height="100" stroke="black" stroke-width="1" />
+	<circle cx="0" cy="50" r="15" fill="#e7ad52" stroke="black" stroke-width="1">
+		<animateMotion path="M 0 0 H 300 Z" dur="3s" repeatCount="indefinite" />
+	</circle>
+</svg>
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>SVG DOM usando Raphaël</h2>
+
+						<div id='gear-holder'></div>
+					</section>
+				</section>
+
+				<!-- Canvas -->
+				<section>
+					<h2>Canvas</h2>
+					<p style='margin-bottom: 2em;'>
+						<strong>Bitmaps</strong> en un lienzo
+					</p>
+					
+					<p data-height="268" data-theme-id="0" data-slug-hash="Clfsi" data-user="luissquall" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/luissquall/pen/Clfsi'>wheels-rotation</a> by Luis Ramos (<a href='http://codepen.io/luissquall'>@luissquall</a>) on <a href='http://codepen.io'>CodePen</a></p>
+<script async src="http://codepen.io/assets/embed/ei.js"></script>
+				</section>
+
+				<!-- SVG or Canvas -->
+				<section>
+					<section>
+						<h2>Canvas o SVG</h2>
+						<h3>He ahí el dilema</h3>
+					</section>
+
+					<section>
+						<h2>Comparación técnica</h2>
+						<table class='table'>
+							<thead>
+								<tr>
+									<th width='50%'>SVG</th>
+									<th width='50%'>2D Context API</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Basado en Documentos</td>
+									<td>Basado en Scripts</td>
+								</tr>
+								<tr>
+									<td>Vectores</td>
+									<td>Operaciones con pixeles</td>
+								</tr>
+								<tr>
+									<td>Modelo de objetos con eventos</td>
+									<td>Primitivas gráficas de bajo nivel (API)</td>
+								</tr>
+								<tr>
+									<td>Impacto negativo en el rendimiento con un gran número de objetos</td>
+									<td>Dibujo (<i>rendering</i>) rápido</td>
+								</tr>
+								<tr>
+									<td>Accesible</td>
+									<td>Necesario crear contenido accesible equivalente</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+
+					<section>
+						<h2>Comparación por casos de uso</h2>
+						<table class='table'>
+							<thead>
+								<tr>
+									<th width='50%'>SVG</th>
+									<th width='50%'>2D Context API</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Interfaces de usuario</td>
+									<td>Juegos</td>
+								</tr>
+								<tr>
+									<td>Imágenes escalables</td>
+									<td>Imágenes muy complejas</td>
+								</tr>
+								<tr>
+									<td>Animaciones interactivas</td>
+									<td>Visualizaciones altamente dinámicas</td>
+								</tr>
+								<tr>
+									<td>Para diseñadores</td>
+									<td>Para desarrolladores</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+				</section>
+
+				<!-- Definition -->
+				<section>
+					<section>
+						<h2>Hola <code>&lt;canvas&gt;</code></h2>
+					</section>
+
+					<section>
+						<p>El W3C lo define como:</p>
+						<blockquote>
+							The canvas element provides scripts with a resolution-dependent bitmap canvas, which can be used for rendering graphs, game graphics, art, or other visual images on the fly.
+						</blockquote>
+
+						<br />
+
+						<p>Y Mark Pilgrim...</p>
+						<blockquote>
+							A canvas is a rectangle in your page where you can use JavaScript to draw anything you want.
+						</blockquote>
+					</section>
+				</section>
+
+				<!-- Concepts -->
+				<section>
+					<section>
+						<h2>Lo elemental</h2>
+					</section>
+
+					<section>
+						<h2>HTML5</h2>
+
+						<h3>Markup</h3>
+						<pre><code data-trim contenteditable>
+<canvas width="300" height="225">
+	Fallback content. Perhaps an image? What about text?
+</canvas>
+						</code></pre>
+
+						<h3>IDL</h3>
+						<pre><code data-trim contenteditable>
+typedef (CanvasRenderingContext2D or WebGLRenderingContext) RenderingContext;
+
+interface HTMLCanvasElement : HTMLElement {
+           attribute unsigned long width;
+           attribute unsigned long height;
+
+  RenderingContext? getContext(DOMString contextId, any... arguments);
+
+  DOMString toDataURL(optional DOMString type, any... arguments);
+  void toBlob(FileCallback? _callback, optional DOMString type, any... arguments);
+};
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Contexto</h2>
+
+						<p>Contexto de dibujo (<i>RenderingContext</i>): API con métodos para dibujar sobre un lienzo.</p>
+
+						<ul>
+							<li>2d (<code>CanvasRenderingContext2D</code>)</li>
+							<li>webgl (<code>WebGLRenderingContext</code>)</li>
+							<li>Extensión de un tercero (<i>vendor</i>: <code>vendorname-context</code>, por ejemplo <code>moz-3d</code>)</li>
+						</ul>
+
+						<pre><code data-trim contenteditable>
+var canvas = document.getElementById('canvas');
+// Returns an object that exposes an API for drawing on the canvas. 
+var ctx = canvas.getContext('2d');
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Sistema de coordenadas</h2>
+
+						<canvas id="cs-1" width="500" height="375"></canvas>
+					</section>
+
+					<section>
+						<h2>API (CanvasRenderingContext2D)</h2>
+						<h3><a href="http://www.w3.org/TR/2dcontext/">Métodos y atributos</a></h3>
+
+						<ul>
+							<li><span class='api-category'>State</span>: <code>save, restore</code></li>
+							<li><span class='api-category'>Drawing Styles</span>: <code>lineWidth, lineCap, font, textAlign, textBaseline, fillStyle, addColorStop, createLinearGradient, createRadialGradient, strokeStyle</code></li>
+							<li><span class='api-category'>Building Paths</span>: <code>moveTo, closePath, lineTo, quadraticCurveTo, bezierCurveTo, arcTo, arc, rect, ellipse</code></li>
+							<li><span class='api-category'>Transformations</span>: <code>scale, rotate, translate, transform</code></li>
+							<li><span class='api-category'>Drawing rectangles, text, paths &amp; images</span>: <code>clearRect, fillRect, strokeRect, fillText, strokeText, stroke, fill, drawImage</code></li>
+							<li><span class='api-category'>Pixel manipulation</span>: <code>createImageData, getImageData, putImageData</code></li>
+							<li>Y más...: Compositing, Shadows, etc.<code></code></li>
+						</ul>
+					</section>
+				</section>
+
+				<!-- Drawing -->
+				<section>
+					<section>
+						<h2>Dibujando el Plano cartesiano</h2>
+						<h3>5 pasos</h3>
+
+						<p>Paths, Text, Shapes &amp; Styles</p>
+					</section>
+					
+					<!-- Context & background -->
+					<section>
+						<h2>1</h2>
+						<h3>Contexto y fondo</h3>
+
+						<div class='row'>
+							<div class='col'>
+						<pre><code data-trim contenteditable>
+// app.js:App.makePlane
+var csNode = document.getElementById(id),
+	csWidth = csNode.width,
+	csHeight = csNode.height,
+	csCtx = csNode.getContext('2d'),
+	cs;
+
+csCtx.clearRect(0, 0, csWidth, csHeight);
+cs = new CoordinateSystem(csCtx);
+
+// coordinate-system.js
+function CoordinateSystem(context) {
+	this.ctx = context;
+	this.width = 500;
+	this.height = 375;
+}
+
+CoordinateSystem.prototype.drawBackground = function() {
+	this.ctx.fillStyle ='#FFF';
+	this.ctx.fillRect(0, 0, 500, 375);
+};
+						</code></pre>
+							</div>
+							<div class='col'>
+								<canvas id="cs-2" width="500" height="375"></canvas>
+							</div>
+						</div>
+					</section>
+
+					<!-- Grid -->
+					<section>
+						<h2>2</h2>
+						<h3>Cuadrícula</h3>
+
+						<div class='row'>
+							<div class='col'>
+						<pre><code data-trim contenteditable>
+// coordinate-system.js
+CoordinateSystem.prototype.drawGrid = function() {
+	// Vertical lines
+	for (var x = 0.5; x < 500; x += 10) {
+		this.ctx.moveTo(x, 0);
+		this.ctx.lineTo(x, 375);
+	}
+
+	// Horizontal lines
+	for (var y = 0.5; y < 375; y += 10) {
+		this.ctx.moveTo(0, y);
+		this.ctx.lineTo(500, y);
+	}
+
+	// Draw it!
+	this.ctx.strokeStyle = "#eee";
+	this.ctx.stroke();
+};
+						</code></pre>
+							</div>
+							<div class='col'>
+								<canvas id="cs-3" width="500" height="375"></canvas>
+							</div>
+						</div>
+					</section>
+
+					<!-- Axis -->
+					<section>
+						<h2>3</h2>
+						<h3>Ejes</h3>
+
+						<div class='row'>
+							<div class='col'>
+						<pre><code data-trim contenteditable>
+// coordinate-system.js
+CoordinateSystem.prototype.drawAxes = function() {
+	// X-axis
+	this.ctx.beginPath();
+	this.ctx.moveTo(0, 40);
+	this.ctx.lineTo(240, 40);
+	this.ctx.moveTo(260, 40);
+	this.ctx.lineTo(500, 40);
+	this.ctx.moveTo(495, 35);
+	this.ctx.lineTo(500, 40);
+	this.ctx.lineTo(495, 45);
+
+	// Y-axis
+	this.ctx.moveTo(60, 0);
+	this.ctx.lineTo(60, 153);
+	this.ctx.moveTo(60, 173);
+	this.ctx.lineTo(60, 375);
+	this.ctx.moveTo(65, 370);
+	this.ctx.lineTo(60, 375);
+	this.ctx.lineTo(55, 370);
+
+	// Draw it!
+	this.ctx.strokeStyle = "#000";
+	this.ctx.stroke();
+};
+						</code></pre>
+							</div>
+							<div class='col'>
+								<canvas id="cs-4" width="500" height="375"></canvas>
+							</div>
+						</div>
+					</section>
+
+					<!-- Labels -->
+					<section>
+						<h2>4</h2>
+						<h3>Etiquetas</h3>
+
+						<div class='row'>
+							<div class='col'>
+						<pre><code data-trim contenteditable>
+// coordinate-system.js
+CoordinateSystem.prototype.drawLabels = function() {
+	this.ctx.fillStyle ='#000';
+	
+	this.ctx.font = "bold 12px sans-serif";
+	this.ctx.fillText("x", 248, 43);
+	this.ctx.fillText("y", 58, 165);
+
+	this.ctx.textBaseline = "top";
+	this.ctx.fillText("( 0 , 0 )", 8, 5);
+
+	this.ctx.textAlign = "right";
+	this.ctx.textBaseline = "bottom";
+	this.ctx.fillText("( 500 , 375 )", 492, 370);
+};
+						</code></pre>
+							</div>
+							<div class='col'>
+								<canvas id="cs-5" width="500" height="375"></canvas>
+							</div>
+						</div>
+					</section>
+
+					<!-- Dots -->
+					<section>
+						<h2>5</h2>
+						<h3>Puntos</h3>
+
+						<div class='row'>
+							<div class='col'>
+						<pre><code data-trim contenteditable>
+// coordinate-system.js
+CoordinateSystem.prototype.drawDots = function() {
+	this.ctx.fillStyle ='#000';
+	this.ctx.fillRect(0, 0, 3, 3);
+	this.ctx.fillRect(497, 372, 3, 3);
+};
+						</code></pre>
+							</div>
+							<div class='col'>
+								<canvas id="cs-6" width="500" height="375"></canvas>
+							</div>
+						</div>
+					</section>
+				</section>
+
+				<!-- Animation basic steps -->
+				<section>
+					<h2>Pasos básicos para animar</h2>
+
+					<ol>
+						<li>Limpia el canvas: <code>ctx.clearRect()</code></li>
+						<li>Guarda el estado actual del canvas: <code>ctx.save()</code></li>
+						<li>¡Dibuja (<i>frame</i>)!: <code>ctx.rect(x, y, width, height);</code></li>
+						<li>Restaura el canvas: <code>ctx.restore()</code></li>
+					</ol>
+					
+					<br /><br />
+
+					<p>Itera, itera, itera...con <code>window.setInterval(), window.requestAnimationFrame()</code></p>
+				</section>
+
+				<!-- Ball -->
+				<section>
+					<h2>Pelota acelerada</h2>
+
+					<p data-height="400" data-theme-id="0" data-slug-hash="rEwGi" data-user="luissquall" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/luissquall/pen/rEwGi'>ball</a> by Luis Ramos (<a href='http://codepen.io/luissquall'>@luissquall</a>) on <a href='http://codepen.io'>CodePen</a></p>
+<script async src="http://codepen.io/assets/embed/ei.js"></script>
+				</section>
+
+				<!-- Wheel -->
+				<section>
+					<h2>Rotación de rueda</h2>
+
+					<p data-height="268" data-theme-id="0" data-slug-hash="egrnF" data-user="luissquall" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/luissquall/pen/egrnF'>wheels-move</a> by Luis Ramos (<a href='http://codepen.io/luissquall'>@luissquall</a>) on <a href='http://codepen.io'>CodePen</a></p>
+<script async src="http://codepen.io/assets/embed/ei.js"></script>
+				</section>
+
+				<!-- Support -->
+				<section>
+					<h2>Soporte</h2>
+
+					<h3>Canvas</h3>
+					<a class="image" href="http://caniuse.com/#feat=canvas" target="_blank">
+						<img width="500" src="img/support-canvas.png" alt="Canvas (basic support)">
+					</a>
+
+					<h3>WebGL - 3D</h3>
+					<a class="image" href="http://caniuse.com/#feat=webgl" target="_blank">
+						<img width="500" src="img/support-webgl.png" alt="WebGL - 3D Canvas graphics">
+					</a>
+
+					<p>
+						<a href="http://caniuse.com/#search=canvas" target="_blank">Y más...</a>
+					</p>
+				</section>
+
+				<!-- Libraries -->
+				<section>
+					<h2>Librerías</h2>
+
+					<div class='row'>
+						<div class='col'>
+							<h3>
+								<a href="http://fabricjs.com/" target="_blank">
+									Fabric.js
+								</a>
+							</h3>
+
+							<a href="http://fabricjs.com/" target="_blank">Fabric.js</a>
+						</div>
+
+						<div class='col'>
+							<a class="image" href="http://kineticjs.com/" target="_blank">
+								<img src="http://kineticjs.com/img/logo.png" alt="KinecticJS">
+							</a>
+
+							<br />
+
+							<a href="http://kineticjs.com/" target="_blank">KinecticJS</a>
+						</div>
+
+						<div class='col'>
+							<a class="image" href="http://processingjs.org/" target="_blank"><img src="http://dailyjs.com/images/posts/processing-logo.png" alt="Processing.js"></a>
+							<br />
+							<a href="http://processingjs.org/" target="_blank">Processing.js</a>
+						</div>
+
+						<div class='col'>
+							<h3>
+								<a href="http://threejs.org/" target="_blank">
+									three.js
+								</a>
+							</h3>
+							
+							<a href="http://threejs.org/" target="_blank">three.js</a>
+						</div>
+					</div>
+				</section>
+
+				<!-- Experiments -->
+				<section>
+					<h2>¿Una ruedita que gira?</h2>
+					<h3>¡QUIERO MÁS!</h3>
+
+					<ul>
+						<li><a href='http://strd6.com/space_demo/'>Space Game</a></li>
+						<li><a href='http://workshop.chromeexperiments.com/projects/armsglobe/'>Small Arms &amp; Ammunition</a></li>
+						<li><a href='http://workshop.chromeexperiments.com/stars/'>Stars</a></li>
+					</ul>
+				</section>
+
+				<section class='slide-end' data-background='url(http://blog.lib.umn.edu/hutch213/myblog/monkey_1.jpg) center center no-repeat' data-background-size='cover'>
+					<h1>FIN</h1>
+					<h3><a href="http://diariodeunmono.com">mono (Luis)</a> / <a href="http://twitter.com/luissquall">@luissquall</a></h3>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="../lib/reveal.js/lib/js/head.min.js"></script>
+		<script src="../lib/reveal.js/js/reveal.min.js"></script>
+
+		<!-- Vendor -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+
+		<!-- Examples -->
+		<script src="js/gear.js"></script>
+		<script src="js/coordinate-system.js"></script>
+		<script src="js/app.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../lib/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../lib/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../lib/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../lib/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../lib/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../lib/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
